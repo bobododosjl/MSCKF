@@ -31,22 +31,55 @@
 
 + #### class
 
-  + #### class JPLQuat：位姿四元数		
+  + #### class JPLQuat：位姿四元数	
 
-  + #### class Vec：三维向量
+  左乘误差状态
 
+  ```c++
+#include "Type.h"
+  #include "utils/quat_ops.h"
+```
+  
++ #### class Vec：三维向量
+  
+向量变量
+  
+  ```c++
+  #include "Type.h"
+  ```
+  
   + #### class PoseJPL：位姿状态
-
+  
+  六自由度位姿
+  
+  ```c++
+  #include <Eigen/Eigen>
+  #include <memory>
+  ```
+  
   + #### class IMU：IMU状态
-
+  
     位姿，速度，陀螺零偏，加表零偏
-
+  
+    ```c++
+    #include "PoseJPL.h"
+    #include "utils/quat_ops.h"
+    ```
+  
   + #### class Landmark：SLAM路标点
-
+  
+  ```c++
+  #include "LandmarkRepresentation.h"
+  #include "Vec.h"
+  #include "utils/colors.h"
+  #include "utils/print.h"
+  ```
+  
   + #### class Type：Type
   
+  描述变量如何被表示或更新，每个变量以误差状态形式的表示，及其对应的协方差状态。
 
-#### 知识点：
+#### C++知识点：
 
 + shared_ptr
 
@@ -76,6 +109,30 @@ void set_local_id(int new_id) override
 ```
 
 C++ override从字面意思上，是覆盖的意思，实际上在C++中它是覆盖了一个方法并且对其**重写**，从而达到不同的作用。override是C++11中的一个继承控制关键字。override确保在派生类中声明的重载函数跟基类的虚函数有相同的声明。
+
+基类中有普通虚函数：
+
+```c++
+virtual void set_local_id(int new_id) { _id = new_id; }
+```
+
++ namespace
+
+namespace是C++中的关键字，用来定义一个命名空间，不同头文件中也可以使用名称相同的命名空间，但前提是位于该命名空间中的成员必须保证互不相同。
+
++ 析构函数
+
+创建对象时系统会自动调用构造函数进行初始化工作，同样，销毁对象时系统也会自动调用一个函数来进行清理工作，例如释放分配的内存、关闭打开的文件等，这个函数就是析构函数。
+
+析构函数（Destructor）也是一种特殊的成员函数，没有返回值，不需要程序员显式调用（程序员也没法显式调用），而是在销毁对象时自动执行。构造函数的名字和类名相同，而析构函数的名字是在类名前面加一个`~`符号。
+
+注意：析构函数没有参数，不能被重载，因此一个类只能有一个析构函数。如果用户没有定义，编译器会自动生成一个默认的析构函数。
+
++ 构造函数
+
+构造函数必须是 public 属性的，否则创建对象时无法调用。
+
+
 
 #### ov_msckf namespace
 
