@@ -38,6 +38,7 @@
   ```c++
 #include "Type.h"
   #include "utils/quat_ops.h"
+  ```
 ```
   
 + #### class Vec：三维向量
@@ -46,17 +47,17 @@
   
   ```c++
   #include "Type.h"
-  ```
-  
+```
+
   + #### class PoseJPL：位姿状态
-  
+
   六自由度位姿
-  
+
   ```c++
   #include <Eigen/Eigen>
   #include <memory>
   ```
-  
+
   + #### class IMU：IMU状态
   
     位姿，速度，陀螺零偏，加表零偏
@@ -67,16 +68,16 @@
     ```
   
   + #### class Landmark：SLAM路标点
-  
+
   ```c++
   #include "LandmarkRepresentation.h"
   #include "Vec.h"
   #include "utils/colors.h"
   #include "utils/print.h"
   ```
-  
+
   + #### class Type：Type
-  
+
   描述变量如何被表示或更新，每个变量以误差状态形式的表示，及其对应的协方差状态。
 
 #### C++知识点：
@@ -184,3 +185,35 @@ namespace是C++中的关键字，用来定义一个命名空间，不同头文�
 + #### 零速修正
 
   
+
+### <font color='green'>DAY 2</font>
+
+#### 1,ov_core前端学习
+
+#### open_vins前端主要有三种方式：
+
++ #### 光流KLT
+
++ #### 描述子
+
++ #### Aruco跟踪
+
+#### chinese noted
+
+#### 2,ov_msckf启动OpenVINS
+
+#### 启动函数：ros1_serial_msckf.cpp
+
+#### 3,评价标准
+
++ #### ATE（绝对轨迹误差）
+
++ #### RPE（相对位姿误差）
+
++ #### RMSE（均方根误差）
+
++ #### NEES（规范估计误差平方）
+
++ #### 估计器时间组成
+
++ #### 系统硬件用量
