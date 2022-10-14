@@ -188,7 +188,7 @@ namespace是C++中的关键字，用来定义一个命名空间，不同头文�
 
 ### <font color='green'>DAY 2</font>
 
-#### 1,ov_core前端学习
+1,ov_core前端学习
 
 #### open_vins前端主要有三种方式：
 
@@ -204,16 +204,76 @@ namespace是C++中的关键字，用来定义一个命名空间，不同头文�
 
 #### 启动函数：ros1_serial_msckf.cpp
 
-#### 3,评价标准
+#### 3,ov_eval评价标准
 
 + #### ATE（绝对轨迹误差）
 
+####          估计轨迹和真实轨迹对齐后，每个时间戳对应的误差都被计算得
+
+#### 到，之后会被平均。
+
+#### 计算公式：$e_{A T E}=\frac{1}{N} \sum_{i=1}^N \sqrt{\frac{1}{K} \sum_{k=1}^K\left\|\mathbf{x}_{k, i} \boxminus \hat{\mathbf{x}}_{k, i}^{+}\right\|_2^2}$
+
+#### 其中，N是算法运行的次数，K是位姿测量个数，$\hat{\mathbf{x}}^{+}$是估计轨迹。
+
 + #### RPE（相对位姿误差）
+
+#### 可以计算许多小段范围内的导航误差，
 
 + #### RMSE（均方根误差）
 
 + #### NEES（规范估计误差平方）
 
-+ #### 估计器时间组成
++ #### 计算量评价
 
-+ #### 系统硬件用量
+#### 4,Futrure Roadmap
+
++ #### 更先进的IMU积分方法，以及建立IMU内参模型
+
+### <font color='green'>DAY 3</font>
+
+#### 1,ov_msckf IMU预积分推导
+
+#### 主要框架：
+
++ #### Propagator构造函数，填充陀螺仪和加速度计的噪声和随机游走，还有重力
+
++ #### feed_imu IMU回调，不断的读入IMU的时间戳，角速度和加速度
+
++ #### interpolate_data IMU数据线性化插值
+
++ #### IMU预积分公式RK4——predict_mean_rk4
+
++ #### IMU预积分公式——predict_mean_discrete
+
++ #### propagate_and_clone，IMU状态预测和误差状态转移矩阵计算
+
++ #### select_imu_readings 取t0到t1时刻内的IMU数据
+
++ #### predict_and_compute IMU预积分和协方差预测
+
+### <font color='green'>DAY 4</font>
+
+#### 1,ov_msckf 量测更新推导
+
++ #### 最小均方差估计
+
++ 
+
++ #### 条件概率分布
+
++ #### 线性量测更新
+
++ #### 更新公式与推导
+
+### <font color='green'>DAY 5</font>
+
+#### 1，可观性问题
+
++ #### 能观性矩阵的零空间维度反映了系统不可观的维度
+
++ #### VINS系统不可观维度等于4，通常为平移和绕重力方向的yaw
+
++ #### 能观不一致性的原因是EKF的转移和观测Jacobian矩阵的线性化点不同而造成的
+
++ #### EKF错误的可观现象导致yaw的协方差较小，从而系统整体更新出现累计误差
